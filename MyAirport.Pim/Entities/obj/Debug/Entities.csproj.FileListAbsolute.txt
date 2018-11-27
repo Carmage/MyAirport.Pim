@@ -1,0 +1,6 @@
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Entities\obj\Debug\Entities.csprojAssemblyReference.cache
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Entities\obj\Debug\Entities.csproj.CoreCompileInputs.cache
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Entities\bin\Debug\MyAirport.Pim.Entities.dll
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Entities\bin\Debug\MyAirport.Pim.Entities.pdb
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Entities\obj\Debug\MyAirport.Pim.Entities.dll
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Entities\obj\Debug\MyAirport.Pim.Entities.pdb
