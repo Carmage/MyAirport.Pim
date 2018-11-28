@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Factory", "ModelsFac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.FormIhm", "Client.FormIhm\Client.FormIhm.csproj", "{B10D6C7F-034D-48E9-8E1C-DF795212BAE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Sql", "Models.Sql\Models.Sql.csproj", "{F825E5F4-49C7-4818-85BF-F32DA7FED023}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{B10D6C7F-034D-48E9-8E1C-DF795212BAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B10D6C7F-034D-48E9-8E1C-DF795212BAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B10D6C7F-034D-48E9-8E1C-DF795212BAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F825E5F4-49C7-4818-85BF-F32DA7FED023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F825E5F4-49C7-4818-85BF-F32DA7FED023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F825E5F4-49C7-4818-85BF-F32DA7FED023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F825E5F4-49C7-4818-85BF-F32DA7FED023}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{28B8568D-7197-49CB-9575-0C34524BAC3C} = {4C3DFA16-61C9-4FD9-982F-860D5D27CAB6}
 		{18801899-BC37-4463-9D85-4F7D28CA7894} = {4C3DFA16-61C9-4FD9-982F-860D5D27CAB6}
 		{44CC3ABB-C624-40C7-B0EA-730BE525B601} = {4C3DFA16-61C9-4FD9-982F-860D5D27CAB6}
+		{F825E5F4-49C7-4818-85BF-F32DA7FED023} = {4C3DFA16-61C9-4FD9-982F-860D5D27CAB6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {589D9D23-90FF-4E13-929E-AF2CB596A5CE}
