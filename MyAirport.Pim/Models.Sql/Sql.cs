@@ -14,13 +14,13 @@ namespace MyAirport.Pim.Models
         //string strCnx = ConfigurationManager.ConnectionStrings["MyAirport.Pim.Settings.DbConnect"].ConnectionString;
         string strCnx = "Data Source=DESKTOP-8COAIAC\\SQLEXPRESS;Initial Catalog=MyAirport;Integrated Security=True";
 
-        string commandGetBagageId = "SELECT b.ID_BAGAGE, b.CODE_IATA, b.COMPAGNIE, b.LIGNE, b.DATE_CREATION,"
+        string commandGetBagageId = "SELECT b.ID_BAGAGE, b.CODE_IATA, b.COMPAGNIE, b.LIGNE, b.DATE_CREATION, b.DESTINATION, b.PRIORITAIRE,"
             + " b.ESCALE, b.CLASSE, b.CONTINUATION, bp.ID_PARTICULARITE, cast(iif(bp.ID_PARTICULARITE is null, 0, 1) as bit) as 'RUSH'"
             + " from BAGAGE b"
             + " left outer join BAGAGE_A_POUR_PARTICULARITE bp on bp.ID_BAGAGE = b.ID_BAGAGE and bp.ID_PARTICULARITE = 15"
             + " where b.id_bagage = @id_bagage";
 
-        string commandGetBagageIata = "SELECT b.ID_BAGAGE, b.CODE_IATA, b.COMPAGNIE, b.LIGNE, b.DATE_CREATION,"
+        string commandGetBagageIata = "SELECT b.ID_BAGAGE, b.CODE_IATA, b.COMPAGNIE, b.LIGNE, b.DATE_CREATION, b.DESTINATION, b.PRIORITAIRE,"
             + " b.ESCALE, b.CLASSE, b.CONTINUATION, bp.ID_PARTICULARITE, cast(iif(bp.ID_PARTICULARITE is null, 0, 1) as bit) as 'RUSH'"
             + " from BAGAGE b"
             + " left outer join BAGAGE_A_POUR_PARTICULARITE bp on bp.ID_BAGAGE = b.ID_BAGAGE and bp.ID_PARTICULARITE = 15"
@@ -37,14 +37,25 @@ namespace MyAirport.Pim.Models
                 SqlDataReader sdr = cmd.ExecuteReader();
                 if (sdr.Read())
                 {
+                    // Treatment for EnContinuation
+                    String curEnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION"));
+                    bool curBoolEnContinuation = curEnContinuation.Equals("1");
+
                     bagRes = new BagageDefinition()
                     {
                         IdBagage = sdr.GetInt32(sdr.GetOrdinal("ID_BAGAGE")),
                         CodeIata = sdr.GetString(sdr.GetOrdinal("CODE_IATA")),
-                        EnContinuation = sdr.GetBoolean(sdr.GetOrdinal("CONTINUATION"))
+                        EnContinuation = curBoolEnContinuation,
+                        Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
+                        Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
+                        DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
+                        Prioritaire = sdr.GetBoolean(sdr.GetOrdinal("PRIORITAIRE")),
+                        Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE"))
                     };
                 }
             }
+
+            Console.WriteLine(bagRes);
             return bagRes;
         }
 
@@ -59,12 +70,28 @@ namespace MyAirport.Pim.Models
                 SqlDataReader sdr = cmd.ExecuteReader();
                 while (sdr.Read())
                 {
+                    // Treatment for EnContinuation
+                    String curEnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION"));
+                    bool curBoolEnContinuation = curEnContinuation.Equals("Y");
+
                     listBagRes.Add(new BagageDefinition()
                     {
                         IdBagage = sdr.GetInt32(sdr.GetOrdinal("ID_BAGAGE")),
                         CodeIata = sdr.GetString(sdr.GetOrdinal("CODE_IATA")),
-                        EnContinuation = sdr.GetBoolean(sdr.GetOrdinal("CONTINUATION"))
+                        EnContinuation = curBoolEnContinuation,
+                        Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
+                        Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
+                        DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
+                        Prioritaire = sdr.GetBoolean(sdr.GetOrdinal("PRIORITAIRE")),
+                        Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE"))
                     });
+                
+                    Console.WriteLine(listBagRes);
+                    Console.WriteLine(listBagRes[0].IdBagage);
+                    Console.WriteLine(listBagRes[0].CodeIata);
+                    Console.WriteLine(listBagRes[0].Compagnie);
+                    Console.WriteLine(listBagRes[0].Prioritaire);
+                    Console.WriteLine(listBagRes[0].EnContinuation);
                 }
             }
             return listBagRes;

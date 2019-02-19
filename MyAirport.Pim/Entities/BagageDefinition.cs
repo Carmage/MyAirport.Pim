@@ -18,7 +18,7 @@ namespace MyAirport.Pim.Entities
 
         public DateTime DateVol { get; set; }       // Jour et heure de depart du vol
 
-        public string Itineraire { get; set; }      // Arrêt ou descend le passager pour ce vol
+        public string Itineraire { get; set; }      // Arrêt où descend le passager pour ce vol
 
         public bool Prioritaire { get; set; }       // Est-ce que le passager est un passager prioritaire?
 
