@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MyAirport.Pim.Entities;
 
 namespace MyAirport.Pim.Models
@@ -12,7 +8,7 @@ namespace MyAirport.Pim.Models
     public class Sql : AbstractDefinition
     {
         //string strCnx = ConfigurationManager.ConnectionStrings["MyAirport.Pim.Settings.DbConnect"].ConnectionString;
-        string strCnx = "Data Source=DESKTOP-8COAIAC\\SQLEXPRESS;Initial Catalog=MyAirport;Integrated Security=True";
+        string strCnx = "Data Source=DESKTOP-CG3AG4S\\SQLEXPRESS;Initial Catalog=MyAirport;Integrated Security=True";
 
         string commandGetBagageId = "SELECT b.ID_BAGAGE, b.CODE_IATA, b.COMPAGNIE, b.LIGNE, b.DATE_CREATION, b.DESTINATION, b.PRIORITAIRE,"
             + " b.ESCALE, b.CLASSE, b.CONTINUATION, bp.ID_PARTICULARITE, cast(iif(bp.ID_PARTICULARITE is null, 0, 1) as bit) as 'RUSH'"
@@ -37,15 +33,11 @@ namespace MyAirport.Pim.Models
                 SqlDataReader sdr = cmd.ExecuteReader();
                 if (sdr.Read())
                 {
-                    // Treatment for EnContinuation
-                    String curEnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION"));
-                    bool curBoolEnContinuation = curEnContinuation.Equals("1");
-
                     bagRes = new BagageDefinition()
                     {
                         IdBagage = sdr.GetInt32(sdr.GetOrdinal("ID_BAGAGE")),
                         CodeIata = sdr.GetString(sdr.GetOrdinal("CODE_IATA")),
-                        EnContinuation = curBoolEnContinuation,
+                        EnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION")).Equals("1"),
                         Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
                         Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
                         DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
@@ -55,7 +47,7 @@ namespace MyAirport.Pim.Models
                 }
             }
 
-            Console.WriteLine(bagRes);
+            Console.WriteLine(bagRes.ToString());
             return bagRes;
         }
 
@@ -85,13 +77,13 @@ namespace MyAirport.Pim.Models
                         Prioritaire = sdr.GetBoolean(sdr.GetOrdinal("PRIORITAIRE")),
                         Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE"))
                     });
-                
-                    Console.WriteLine(listBagRes);
-                    Console.WriteLine(listBagRes[0].IdBagage);
-                    Console.WriteLine(listBagRes[0].CodeIata);
-                    Console.WriteLine(listBagRes[0].Compagnie);
-                    Console.WriteLine(listBagRes[0].Prioritaire);
-                    Console.WriteLine(listBagRes[0].EnContinuation);
+                }
+
+                Console.WriteLine("GetBagage returned :");
+
+                foreach (BagageDefinition b in listBagRes)
+                {
+                    Console.WriteLine("\t" + b);
                 }
             }
             return listBagRes;
