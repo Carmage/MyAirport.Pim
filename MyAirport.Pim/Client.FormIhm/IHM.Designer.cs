@@ -1,6 +1,6 @@
 ﻿namespace Client.FormIhm
 {
-    partial class Form1
+    partial class IHM
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -68,7 +68,6 @@
             this.textBoxCodeIata.Name = "textBoxCodeIata";
             this.textBoxCodeIata.Size = new System.Drawing.Size(122, 26);
             this.textBoxCodeIata.TabIndex = 2;
-            this.textBoxCodeIata.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // labelCodeIata
             // 
@@ -79,7 +78,6 @@
             this.labelCodeIata.Size = new System.Drawing.Size(87, 20);
             this.labelCodeIata.TabIndex = 3;
             this.labelCodeIata.Text = "Code IATA";
-            this.labelCodeIata.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnRechercher
             // 
@@ -101,7 +99,6 @@
             this.labelIdBagage.Size = new System.Drawing.Size(86, 20);
             this.labelIdBagage.TabIndex = 5;
             this.labelIdBagage.Text = "ID Bagage";
-            this.labelIdBagage.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // labelCompagnie
             // 
@@ -112,7 +109,6 @@
             this.labelCompagnie.Size = new System.Drawing.Size(90, 20);
             this.labelCompagnie.TabIndex = 6;
             this.labelCompagnie.Text = "Compagnie";
-            this.labelCompagnie.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBoxPrestataire
             // 
@@ -151,7 +147,6 @@
             this.labelItineraire.Size = new System.Drawing.Size(71, 20);
             this.labelItineraire.TabIndex = 10;
             this.labelItineraire.Text = "Itinéraire";
-            this.labelItineraire.Click += new System.EventHandler(this.lblItineraire_Click);
             // 
             // labelPrioritaire
             // 
@@ -162,7 +157,6 @@
             this.labelPrioritaire.Size = new System.Drawing.Size(75, 20);
             this.labelPrioritaire.TabIndex = 11;
             this.labelPrioritaire.Text = "Prioritaire";
-            this.labelPrioritaire.Click += new System.EventHandler(this.lblPrioritaire_Click);
             // 
             // labelEnContinuation
             // 
@@ -173,7 +167,6 @@
             this.labelEnContinuation.Size = new System.Drawing.Size(120, 20);
             this.labelEnContinuation.TabIndex = 12;
             this.labelEnContinuation.Text = "En continuation";
-            this.labelEnContinuation.Click += new System.EventHandler(this.lblEnContinuation_Click);
             // 
             // textBoxIdBagage
             // 
@@ -181,7 +174,6 @@
             this.textBoxIdBagage.Name = "textBoxIdBagage";
             this.textBoxIdBagage.Size = new System.Drawing.Size(208, 26);
             this.textBoxIdBagage.TabIndex = 13;
-            this.textBoxIdBagage.TextChanged += new System.EventHandler(this.textBox1_TextChanged_2);
             // 
             // textBoxCompagnie
             // 
@@ -210,7 +202,6 @@
             this.textBoxItineraire.Name = "textBoxItineraire";
             this.textBoxItineraire.Size = new System.Drawing.Size(208, 26);
             this.textBoxItineraire.TabIndex = 17;
-            this.textBoxItineraire.TextChanged += new System.EventHandler(this.textBoxItineraire_TextChanged);
             // 
             // textBoxPrioritaire
             // 
@@ -218,7 +209,6 @@
             this.textBoxPrioritaire.Name = "textBoxPrioritaire";
             this.textBoxPrioritaire.Size = new System.Drawing.Size(208, 26);
             this.textBoxPrioritaire.TabIndex = 18;
-            this.textBoxPrioritaire.TextChanged += new System.EventHandler(this.textBoxPrioritaire_TextChanged);
             // 
             // textBoxEnContinuation
             // 
@@ -226,7 +216,6 @@
             this.textBoxEnContinuation.Name = "textBoxEnContinuation";
             this.textBoxEnContinuation.Size = new System.Drawing.Size(208, 26);
             this.textBoxEnContinuation.TabIndex = 19;
-            this.textBoxEnContinuation.TextChanged += new System.EventHandler(this.textBoxEnContinuation_TextChanged);
             // 
             // labelResultatRecherche
             // 
@@ -264,7 +253,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
