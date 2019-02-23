@@ -83,7 +83,7 @@ namespace MyAirport.Pim.Models
 
                 foreach (BagageDefinition b in listBagRes)
                 {
-                    Console.WriteLine("\t" + b);
+                    Console.WriteLine("\t" + b.ToString());
                 }
             }
             return listBagRes;

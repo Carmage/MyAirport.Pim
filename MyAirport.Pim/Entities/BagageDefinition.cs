@@ -21,5 +21,18 @@ namespace MyAirport.Pim.Entities
         public bool EnContinuation { get; set; }    // Si la destination est différente de l'itineraire, est-ce que le bagage doit être livré au passager au prochain arrêt?
 
         public bool Rush { get; set; }              // Bagage sans passager (pour les bagages ayant ratés un vol)
+        public override String ToString()
+        {
+            return "Object=Bagage" +
+                    ", ID=" + IdBagage +
+                    ", IATA=" + CodeIata +
+                    ", Prioritaire=" + Prioritaire +
+                    ", Compagnie=" + Compagnie +
+                    ", Ligne=" + Ligne +
+                    ", DateVol=" + DateVol +
+                    ", Itineraire=" + Itineraire +
+                    ", EnContinuation=" + EnContinuation +
+                    ", Rush=" + Rush;
+        }
     }
 }
