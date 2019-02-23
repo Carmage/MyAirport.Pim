@@ -14,16 +14,17 @@ namespace MyAirport.Pim.Models
                     switch (ConfigurationManager.AppSettings["Factory"])
                     {
                         case "Sql":
-                            singleton = new MyAirport.Pim.Models.Sql();
+                            singleton = new Sql();
                             break;
                         case "Natif":
-                            singleton = new MyAirport.Pim.Models.Natif();
+                            singleton = new Natif();
                             break;
                         default:
-                            singleton = new MyAirport.Pim.Models.Sql();
+                            singleton = new Sql();
                             break;
                     }
                 }
+
                 return singleton;
             }
         }

@@ -81,7 +81,7 @@
             // 
             // btnRechercher
             // 
-            this.btnRechercher.Location = new System.Drawing.Point(419, 78);
+            this.btnRechercher.Location = new System.Drawing.Point(419, 81);
             this.btnRechercher.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnRechercher.Name = "btnRechercher";
             this.btnRechercher.Size = new System.Drawing.Size(107, 33);
@@ -225,11 +225,11 @@
             this.labelResultatRecherche.Size = new System.Drawing.Size(0, 20);
             this.labelResultatRecherche.TabIndex = 20;
             // 
-            // Form1
+            // IHM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 531);
+            this.ClientSize = new System.Drawing.Size(1248, 531);
             this.Controls.Add(this.labelResultatRecherche);
             this.Controls.Add(this.textBoxEnContinuation);
             this.Controls.Add(this.textBoxPrioritaire);
@@ -251,7 +251,7 @@
             this.Controls.Add(this.textBoxCodeIata);
             this.Controls.Add(this.btnNouveauBagage);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "Form1";
+            this.Name = "IHM";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

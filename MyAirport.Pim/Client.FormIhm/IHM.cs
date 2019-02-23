@@ -8,21 +8,17 @@ namespace Client.FormIhm
         public IHM()
         {
             InitializeComponent();
-            btnNewBagage_Click(this, null);
+            ResetInterface();
         }
 
-        private void SetTextBox(System.Windows.Forms.TextBox t, String newText, bool visible, bool readOnly)
-        {
-            t.Text = newText;
-            t.Visible = visible;
-            t.ReadOnly = readOnly;
-        }
-
-        private void btnNewBagage_Click(object sender, EventArgs e)
+        private void ResetInterface()
         {
             // Reset all interface fields
+            labelResultatRecherche.Visible = false;
+            labelResultatRecherche.Text = "";
+            labelResultatRecherche.ForeColor = System.Drawing.Color.Black;
             labelCodeIata.Visible = true;
-            SetTextBox(textBoxPrestataire, "", true, false);
+            SetTextBox(textBoxPrestataire, textBoxPrestataire.Text, true, false);
             SetTextBox(textBoxCodeIata, "", true, false);
             labelIdBagage.Visible = false;
             SetTextBox(textBoxIdBagage, "", false, true);
@@ -40,9 +36,42 @@ namespace Client.FormIhm
             SetTextBox(textBoxEnContinuation, "", false, true);
         }
 
+        private void SetTextBox(System.Windows.Forms.TextBox t, String newText, bool visible, bool readOnly)
+        {
+            t.Text = newText;
+            t.Visible = visible;
+            t.ReadOnly = readOnly;
+        }
+
+        private string GetStringFromBool(bool b)
+        {
+            return b ? "Oui" : "Non";
+        }
+
+        private string GetFullCompanyName(String compagnie)
+        {
+            // TODO : aller rechercher le nom complet de la compagnie en fonction de son abréviation "compagnie"
+            return compagnie;
+        }
+
+        private void btnNewBagage_Click(object sender, EventArgs e)
+        {
+            ResetInterface();
+        }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            System.Collections.Generic.List<MyAirport.Pim.Entities.BagageDefinition> bagageList = MyAirport.Pim.Models.Factory.Model.GetBagage(textBoxCodeIata.Text);
+            SetTextBox(textBoxPrestataire, textBoxPrestataire.Text, true, true);
+            SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true, true);
+            labelResultatRecherche.Visible = false;
+            string codeIataBagage = SanitizeCodeIata(textBoxPrestataire.Text, textBoxCodeIata.Text);
+
+            if (codeIataBagage is null)
+            {
+                return;
+            }
+
+            System.Collections.Generic.List<MyAirport.Pim.Entities.BagageDefinition> bagageList = MyAirport.Pim.Models.Factory.Model.GetBagage(codeIataBagage);
 
             if (bagageList.Count == 0) // Enter create mode
             {
@@ -62,9 +91,9 @@ namespace Client.FormIhm
                 labelItineraire.Visible = true;
                 SetTextBox(textBoxItineraire, bagage.Itineraire, true, true);
                 labelPrioritaire.Visible = true;
-                SetTextBox(textBoxPrioritaire, GetStringPrioritaire(bagage.Prioritaire), true, true);
+                SetTextBox(textBoxPrioritaire, GetStringFromBool(bagage.Prioritaire), true, true);
                 labelEnContinuation.Visible = true;
-                SetTextBox(textBoxEnContinuation, GetStringPrioritaire(bagage.EnContinuation), true, true);
+                SetTextBox(textBoxEnContinuation, GetStringFromBool(bagage.EnContinuation), true, true);
             }
             else // Display a popup with all the bagage found
             {
@@ -72,15 +101,44 @@ namespace Client.FormIhm
             }
         }
 
-        private string GetStringPrioritaire(bool prioritaire)
+        private string SanitizeCodeIata(string prestataire, string codeIata)
         {
-            return prioritaire ? "Oui" : "Non";
+            Console.WriteLine("SanitizeCodeIata");
+            bool error = false;
+            string message = "";
+
+            if (prestataire.Length != 4)
+            {
+                error = true;
+                message += "Le code prestataire doit comporter 4 chiffres.";
+            }
+
+            if (codeIata.Length < 6 || codeIata.Length > 8)
+            {
+                error = true;
+                message = message.Equals("") ? message : message + " ";
+                message += "Le code de droite doit comporter 6 à 8 chiffres.";
+            }
+
+            if (error)
+            {
+                Warn(message);
+                return null;
+            }
+
+            while (codeIata.Length != 8)
+            {
+                codeIata += '0';
+            }
+
+            return prestataire + codeIata;
         }
 
-        private string GetFullCompanyName(String compagnie)
+        private void Warn(string message)
         {
-            // TODO : aller rechercher le nom complet de la compagnie en fonction de son abréviation "compagnie"
-            return compagnie;
+            labelResultatRecherche.ForeColor = System.Drawing.Color.Red;
+            labelResultatRecherche.Text = message;
+            labelResultatRecherche.Visible = true;
         }
     }
 }

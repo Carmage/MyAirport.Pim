@@ -25,19 +25,21 @@ namespace MyAirport.Pim.Models
         public override BagageDefinition GetBagage(int idBagage)
         {
             BagageDefinition bagRes = null;
+
             using (SqlConnection cnx = new SqlConnection(strCnx))
             {
                 SqlCommand cmd = new SqlCommand(commandGetBagageId, cnx);
                 cmd.Parameters.AddWithValue("@id_bagage", idBagage);
                 cnx.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
+
                 if (sdr.Read())
                 {
                     bagRes = new BagageDefinition()
                     {
                         IdBagage = sdr.GetInt32(sdr.GetOrdinal("ID_BAGAGE")),
                         CodeIata = sdr.GetString(sdr.GetOrdinal("CODE_IATA")),
-                        EnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION")).Equals("1"),
+                        EnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION")).Equals("Y"),
                         Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
                         Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
                         DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
@@ -54,23 +56,21 @@ namespace MyAirport.Pim.Models
         public override List<BagageDefinition> GetBagage(string codeIataBagage)
         {
             List<BagageDefinition> listBagRes = new List<BagageDefinition>();
+
             using (SqlConnection cnx = new SqlConnection(strCnx))
             {
                 SqlCommand cmd = new SqlCommand(commandGetBagageIata, cnx);
                 cmd.Parameters.AddWithValue("@code_iata", codeIataBagage);
                 cnx.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
+
                 while (sdr.Read())
                 {
-                    // Treatment for EnContinuation
-                    String curEnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION"));
-                    bool curBoolEnContinuation = curEnContinuation.Equals("Y");
-
                     listBagRes.Add(new BagageDefinition()
                     {
                         IdBagage = sdr.GetInt32(sdr.GetOrdinal("ID_BAGAGE")),
                         CodeIata = sdr.GetString(sdr.GetOrdinal("CODE_IATA")),
-                        EnContinuation = curBoolEnContinuation,
+                        EnContinuation = sdr.GetString(sdr.GetOrdinal("CONTINUATION")).Equals("Y"),
                         Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
                         Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
                         DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
