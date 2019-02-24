@@ -15,5 +15,10 @@ namespace MyAirport.Pim.Models
         {
             throw new NotImplementedException();
         }
+
+        public override string GetNomCompagnieFromIata(string codeIataCompagnie)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

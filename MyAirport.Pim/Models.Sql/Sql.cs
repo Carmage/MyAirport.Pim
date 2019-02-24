@@ -22,6 +22,15 @@ namespace MyAirport.Pim.Models
             + " left outer join BAGAGE_A_POUR_PARTICULARITE bp on bp.ID_BAGAGE = b.ID_BAGAGE and bp.ID_PARTICULARITE = 15"
             + " where b.code_iata = @code_iata";
 
+        string commandGetNomCompagnie = "SELECT NOM"
+            + " from dbo.COMPAGNIE"
+            + " where CODE_IATA = @code_iata_compagnie;";
+
+        // Unused unless precised by teacher (email sent on the 24 feb 2019 at 00:10)
+        string commandGetPrioritaire = "SELECT PRIORITAIRE"
+            + " from COMPAGNIE_CLASSE cc left outer join COMPAGNIE c on c.ID_COMPAGNIE = cc.ID_COMPAGNIE"
+            + " where c.ID_COMPAGNIE = @id_compagnie and CLASSE = @classe_bagage;";
+
         public override BagageDefinition GetBagage(int idBagage)
         {
             BagageDefinition bagRes = null;
@@ -43,8 +52,10 @@ namespace MyAirport.Pim.Models
                         Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
                         Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
                         DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
+                        ClasseBagage = sdr.GetString(sdr.GetOrdinal("CLASSE")),
                         Prioritaire = sdr.GetBoolean(sdr.GetOrdinal("PRIORITAIRE")),
-                        Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE"))
+                        Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE")),
+                        Rush = sdr.GetBoolean(sdr.GetOrdinal("RUSH"))
                     };
                 }
             }
@@ -74,8 +85,10 @@ namespace MyAirport.Pim.Models
                         Ligne = sdr.GetString(sdr.GetOrdinal("LIGNE")),
                         Compagnie = sdr.GetString(sdr.GetOrdinal("COMPAGNIE")),
                         DateVol = sdr.GetDateTime(sdr.GetOrdinal("DATE_CREATION")),
+                        ClasseBagage = sdr["CLASSE"] is DBNull ? "Y" : Convert.ToString(sdr["CLASSE"]),
                         Prioritaire = sdr.GetBoolean(sdr.GetOrdinal("PRIORITAIRE")),
-                        Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE"))
+                        Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE")),
+                        Rush = sdr.GetBoolean(sdr.GetOrdinal("RUSH"))
                     });
                 }
 
@@ -87,6 +100,26 @@ namespace MyAirport.Pim.Models
                 }
             }
             return listBagRes;
+        }
+
+        public override string GetNomCompagnieFromIata(string codeIataCompagnie)
+        {
+            string nomCompagnie = null;
+
+            using (SqlConnection cnx = new SqlConnection(strCnx))
+            {
+                SqlCommand cmd = new SqlCommand(commandGetNomCompagnie, cnx);
+                cmd.Parameters.AddWithValue("@code_iata_compagnie", codeIataCompagnie);
+                cnx.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+
+                if (sdr.Read())
+                {
+                    nomCompagnie = sdr.GetString(sdr.GetOrdinal("NOM"));
+                }
+            }
+
+            return nomCompagnie;
         }
     }
 }
