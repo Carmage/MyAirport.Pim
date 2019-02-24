@@ -1,6 +1,6 @@
 ﻿namespace Client.FormIhm
 {
-    partial class IHM
+    partial class PIM
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -39,6 +39,7 @@
             this.toolStripStatusLabelMessages = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelEtat = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBoxInformationsVol = new System.Windows.Forms.GroupBox();
+            this.textBoxAlpha = new System.Windows.Forms.TextBox();
             this.labelCompagnie = new System.Windows.Forms.Label();
             this.textBoxDateVol = new System.Windows.Forms.TextBox();
             this.labelDateVol = new System.Windows.Forms.Label();
@@ -130,6 +131,7 @@
             // 
             // statusStrip
             // 
+            this.statusStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelMessages,
@@ -157,10 +159,12 @@
             this.toolStripStatusLabelEtat.Name = "toolStripStatusLabelEtat";
             this.toolStripStatusLabelEtat.Padding = new System.Windows.Forms.Padding(1);
             this.toolStripStatusLabelEtat.Size = new System.Drawing.Size(150, 33);
-            this.toolStripStatusLabelEtat.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.toolStripStatusLabelEtat.Text = "Deconnecter";
+            this.toolStripStatusLabelEtat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBoxInformationsVol
             // 
+            this.groupBoxInformationsVol.Controls.Add(this.textBoxAlpha);
             this.groupBoxInformationsVol.Controls.Add(this.labelCompagnie);
             this.groupBoxInformationsVol.Controls.Add(this.textBoxDateVol);
             this.groupBoxInformationsVol.Controls.Add(this.labelDateVol);
@@ -174,6 +178,14 @@
             this.groupBoxInformationsVol.TabIndex = 2;
             this.groupBoxInformationsVol.TabStop = false;
             this.groupBoxInformationsVol.Text = "Informations Vol";
+            // 
+            // textBoxAlpha
+            // 
+            this.textBoxAlpha.Location = new System.Drawing.Point(124, 74);
+            this.textBoxAlpha.Name = "textBoxAlpha";
+            this.textBoxAlpha.ReadOnly = true;
+            this.textBoxAlpha.Size = new System.Drawing.Size(110, 26);
+            this.textBoxAlpha.TabIndex = 10;
             // 
             // labelCompagnie
             // 
@@ -189,6 +201,7 @@
             // 
             this.textBoxDateVol.Location = new System.Drawing.Point(124, 126);
             this.textBoxDateVol.Name = "textBoxDateVol";
+            this.textBoxDateVol.ReadOnly = true;
             this.textBoxDateVol.Size = new System.Drawing.Size(227, 26);
             this.textBoxDateVol.TabIndex = 3;
             // 
@@ -216,14 +229,16 @@
             // 
             this.textBoxCompagnie.Location = new System.Drawing.Point(124, 28);
             this.textBoxCompagnie.Name = "textBoxCompagnie";
+            this.textBoxCompagnie.ReadOnly = true;
             this.textBoxCompagnie.Size = new System.Drawing.Size(227, 26);
             this.textBoxCompagnie.TabIndex = 1;
             // 
             // textBoxLigne
             // 
-            this.textBoxLigne.Location = new System.Drawing.Point(124, 74);
+            this.textBoxLigne.Location = new System.Drawing.Point(241, 74);
             this.textBoxLigne.Name = "textBoxLigne";
-            this.textBoxLigne.Size = new System.Drawing.Size(227, 26);
+            this.textBoxLigne.ReadOnly = true;
+            this.textBoxLigne.Size = new System.Drawing.Size(110, 26);
             this.textBoxLigne.TabIndex = 2;
             // 
             // groupBoxInformationsBagage
@@ -244,8 +259,8 @@
             // 
             // checkBoxRush
             // 
-            this.checkBoxRush.AutoCheck = false;
             this.checkBoxRush.AutoSize = true;
+            this.checkBoxRush.Enabled = false;
             this.checkBoxRush.Location = new System.Drawing.Point(148, 165);
             this.checkBoxRush.Name = "checkBoxRush";
             this.checkBoxRush.Size = new System.Drawing.Size(73, 24);
@@ -255,8 +270,8 @@
             // 
             // checkBoxContinuation
             // 
-            this.checkBoxContinuation.AutoCheck = false;
             this.checkBoxContinuation.AutoSize = true;
+            this.checkBoxContinuation.Enabled = false;
             this.checkBoxContinuation.Location = new System.Drawing.Point(149, 125);
             this.checkBoxContinuation.Name = "checkBoxContinuation";
             this.checkBoxContinuation.Size = new System.Drawing.Size(125, 24);
@@ -288,6 +303,7 @@
             // 
             this.textBoxItineraire.Location = new System.Drawing.Point(149, 34);
             this.textBoxItineraire.Name = "textBoxItineraire";
+            this.textBoxItineraire.ReadOnly = true;
             this.textBoxItineraire.Size = new System.Drawing.Size(199, 26);
             this.textBoxItineraire.TabIndex = 1;
             // 
@@ -295,13 +311,13 @@
             // 
             this.textBoxClasseBagage.Location = new System.Drawing.Point(149, 80);
             this.textBoxClasseBagage.Name = "textBoxClasseBagage";
+            this.textBoxClasseBagage.ReadOnly = true;
             this.textBoxClasseBagage.Size = new System.Drawing.Size(199, 26);
             this.textBoxClasseBagage.TabIndex = 2;
             // 
-            // IHM
+            // PIM
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(736, 387);
             this.Controls.Add(this.groupBoxInformationsBagage);
@@ -309,9 +325,10 @@
             this.Controls.Add(this.groupBoxRecherche);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "IHM";
+            this.Name = "PIM";
             this.Text = "MyAirport";
             this.groupBoxRecherche.ResumeLayout(false);
             this.groupBoxRecherche.PerformLayout();
@@ -354,6 +371,7 @@
         private System.Windows.Forms.TextBox textBoxClasseBagage;
         private System.Windows.Forms.CheckBox checkBoxRush;
         private System.Windows.Forms.CheckBox checkBoxContinuation;
+        private System.Windows.Forms.TextBox textBoxAlpha;
     }
 }
 

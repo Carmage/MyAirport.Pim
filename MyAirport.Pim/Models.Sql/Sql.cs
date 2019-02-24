@@ -26,11 +26,6 @@ namespace MyAirport.Pim.Models
             + " from dbo.COMPAGNIE"
             + " where CODE_IATA = @code_iata_compagnie;";
 
-        // Unused unless precised by teacher (email sent on the 24 feb 2019 at 00:10)
-        string commandGetPrioritaire = "SELECT PRIORITAIRE"
-            + " from COMPAGNIE_CLASSE cc left outer join COMPAGNIE c on c.ID_COMPAGNIE = cc.ID_COMPAGNIE"
-            + " where c.ID_COMPAGNIE = @id_compagnie and CLASSE = @classe_bagage;";
-
         public override BagageDefinition GetBagage(int idBagage)
         {
             BagageDefinition bagRes = null;

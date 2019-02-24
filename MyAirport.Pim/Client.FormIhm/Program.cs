@@ -13,7 +13,7 @@ namespace Client.FormIhm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new IHM());
+            Application.Run(new PIM());
         }
     }
 }
