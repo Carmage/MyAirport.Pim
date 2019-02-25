@@ -10,7 +10,6 @@ C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\Debug\ModelsFactory.pdb
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\Debug\Models.Natif.pdb
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.csprojAssemblyReference.cache
-C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.Form1.resources
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.Properties.Resources.resources
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.csproj.GenerateResource.cache
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.csproj.CoreCompileInputs.cache
@@ -42,3 +41,6 @@ C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Client
 C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.PIM.resources
 C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\Debug\ClientPIM.dll
 C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\Debug\ClientPIM.pdb
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\Debug\ClientPIM.dll
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\bin\Debug\ClientPIM.pdb
+C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Client.FormIhm\obj\Debug\Client.FormIhm.PIM.resources
