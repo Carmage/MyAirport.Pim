@@ -16,7 +16,7 @@ namespace MyAirport.Pim.Models
             throw new NotImplementedException();
         }
 
-        public override string GetNomCompagnieFromIata(string codeIataCompagnie)
+        public override bool InsertBagage(BagageDefinition b)
         {
             throw new NotImplementedException();
         }

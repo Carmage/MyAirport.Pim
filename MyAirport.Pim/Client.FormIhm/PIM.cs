@@ -6,7 +6,7 @@ namespace Client.FormIhm
 {
     public partial class PIM : Form
     {
-        private PimState state = PimState.Deconnecter;
+        private PimState state = PimState.AttenteBagage;
         private PimState State
         {
             get { return state; }
@@ -16,7 +16,6 @@ namespace Client.FormIhm
         public PIM()
         {
             InitializeComponent();
-            // ResetInterface();
             PimStateChanged += PIM_PimStateChanged;
         }
 
@@ -40,8 +39,6 @@ namespace Client.FormIhm
 
         private void ResetInterface()
         {
-            // ActiveControl = textBoxCodeIata;
-            // Reset all interface fields
             SetTextBox(textBoxCodeIata, "", false);
             SetTextBox(textBoxCompagnie, "", true);
             SetTextBox(textBoxAlpha, "", true);
@@ -52,7 +49,7 @@ namespace Client.FormIhm
             checkBoxContinuation.Enabled = false;
             checkBoxRush.Enabled = false;
             toolStripStatusLabelMessages.Text = "";
-            OnPimStateChanged(PimState.Deconnecter);
+            OnPimStateChanged(PimState.AttenteBagage);
         }
 
         private void SetTextBox(TextBox t, string newText, bool readOnly)
@@ -60,12 +57,7 @@ namespace Client.FormIhm
             t.Text = newText;
             t.ReadOnly = readOnly;
         }
-
-        private string GetFullCompanyName(string codeIataCompagnie)
-        {
-            return MyAirport.Pim.Models.Factory.Model.GetNomCompagnieFromIata(codeIataCompagnie);
-        }
-
+        
         private void btnNewBagage_Click(object sender, EventArgs e)
         {
             ResetInterface();
@@ -99,7 +91,7 @@ namespace Client.FormIhm
                 toolStripStatusLabelMessages.Text = "";
                 OnPimStateChanged(PimState.AffichageBagage);
                 MyAirport.Pim.Entities.BagageDefinition bagage = bagageList[0];
-                SetTextBox(textBoxCompagnie, GetFullCompanyName(bagage.Compagnie), true);
+                SetTextBox(textBoxCompagnie, bagage.NomCompagnie, true);
                 SetTextBox(textBoxAlpha, bagage.Compagnie, true);
                 SetTextBox(textBoxLigne, bagage.Ligne, true);
                 SetTextBox(textBoxDateVol, Convert.ToString(bagage.DateVol), true);
@@ -144,7 +136,7 @@ namespace Client.FormIhm
 
         private void btnCreer_Click(object sender, EventArgs e)
         {
-            // bool inserted = MyAirport.Pim.Models.Factory.Model.InsertBagage(codeIataBagage);
+            // bool inserted = MyAirport.Pim.Models.Factory.Model.InsertBagage();
         }
     }
 }

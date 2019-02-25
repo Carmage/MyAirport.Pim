@@ -47,13 +47,13 @@
             this.textBoxCompagnie = new System.Windows.Forms.TextBox();
             this.textBoxLigne = new System.Windows.Forms.TextBox();
             this.groupBoxInformationsBagage = new System.Windows.Forms.GroupBox();
+            this.btnCreer = new System.Windows.Forms.Button();
             this.checkBoxRush = new System.Windows.Forms.CheckBox();
             this.checkBoxContinuation = new System.Windows.Forms.CheckBox();
             this.labelItineraire = new System.Windows.Forms.Label();
             this.labelClasseBagage = new System.Windows.Forms.Label();
             this.textBoxItineraire = new System.Windows.Forms.TextBox();
             this.textBoxClasseBagage = new System.Windows.Forms.TextBox();
-            this.btnCreer = new System.Windows.Forms.Button();
             this.groupBoxRecherche.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -160,7 +160,7 @@
             this.toolStripStatusLabelEtat.Name = "toolStripStatusLabelEtat";
             this.toolStripStatusLabelEtat.Padding = new System.Windows.Forms.Padding(1);
             this.toolStripStatusLabelEtat.Size = new System.Drawing.Size(150, 33);
-            this.toolStripStatusLabelEtat.Text = "Deconnecter";
+            this.toolStripStatusLabelEtat.Text = "AttenteBagage";
             this.toolStripStatusLabelEtat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBoxInformationsVol
@@ -259,6 +259,16 @@
             this.groupBoxInformationsBagage.TabStop = false;
             this.groupBoxInformationsBagage.Text = "Informations Bagage";
             // 
+            // btnCreer
+            // 
+            this.btnCreer.Location = new System.Drawing.Point(241, 218);
+            this.btnCreer.Name = "btnCreer";
+            this.btnCreer.Size = new System.Drawing.Size(107, 29);
+            this.btnCreer.TabIndex = 12;
+            this.btnCreer.Text = "Créer";
+            this.btnCreer.UseVisualStyleBackColor = true;
+            this.btnCreer.Click += new System.EventHandler(this.btnCreer_Click);
+            // 
             // checkBoxRush
             // 
             this.checkBoxRush.AutoSize = true;
@@ -316,16 +326,6 @@
             this.textBoxClasseBagage.ReadOnly = true;
             this.textBoxClasseBagage.Size = new System.Drawing.Size(199, 26);
             this.textBoxClasseBagage.TabIndex = 2;
-            // 
-            // btnCreer
-            // 
-            this.btnCreer.Location = new System.Drawing.Point(241, 218);
-            this.btnCreer.Name = "btnCreer";
-            this.btnCreer.Size = new System.Drawing.Size(107, 29);
-            this.btnCreer.TabIndex = 12;
-            this.btnCreer.Text = "Créer";
-            this.btnCreer.UseVisualStyleBackColor = true;
-            this.btnCreer.Click += new System.EventHandler(this.btnCreer_Click);
             // 
             // PIM
             // 
