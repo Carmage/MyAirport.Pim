@@ -144,7 +144,7 @@ namespace Client.FormIhm
 
         private void btnCreer_Click(object sender, EventArgs e)
         {
-            bool inserted = MyAirport.Pim.Models.Factory.Model.InsertBagage(codeIataBagage);
+            // bool inserted = MyAirport.Pim.Models.Factory.Model.InsertBagage(codeIataBagage);
         }
     }
 }
