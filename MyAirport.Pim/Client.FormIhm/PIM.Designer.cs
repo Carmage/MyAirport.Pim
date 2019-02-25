@@ -53,6 +53,7 @@
             this.labelClasseBagage = new System.Windows.Forms.Label();
             this.textBoxItineraire = new System.Windows.Forms.TextBox();
             this.textBoxClasseBagage = new System.Windows.Forms.TextBox();
+            this.btnCreer = new System.Windows.Forms.Button();
             this.groupBoxRecherche.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -136,7 +137,7 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelMessages,
             this.toolStripStatusLabelEtat});
-            this.statusStrip.Location = new System.Drawing.Point(0, 350);
+            this.statusStrip.Location = new System.Drawing.Point(0, 383);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(736, 37);
             this.statusStrip.SizingGrip = false;
@@ -174,7 +175,7 @@
             this.groupBoxInformationsVol.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBoxInformationsVol.Location = new System.Drawing.Point(0, 121);
             this.groupBoxInformationsVol.Name = "groupBoxInformationsVol";
-            this.groupBoxInformationsVol.Size = new System.Drawing.Size(357, 229);
+            this.groupBoxInformationsVol.Size = new System.Drawing.Size(357, 262);
             this.groupBoxInformationsVol.TabIndex = 2;
             this.groupBoxInformationsVol.TabStop = false;
             this.groupBoxInformationsVol.Text = "Informations Vol";
@@ -243,6 +244,7 @@
             // 
             // groupBoxInformationsBagage
             // 
+            this.groupBoxInformationsBagage.Controls.Add(this.btnCreer);
             this.groupBoxInformationsBagage.Controls.Add(this.checkBoxRush);
             this.groupBoxInformationsBagage.Controls.Add(this.checkBoxContinuation);
             this.groupBoxInformationsBagage.Controls.Add(this.labelItineraire);
@@ -252,7 +254,7 @@
             this.groupBoxInformationsBagage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxInformationsBagage.Location = new System.Drawing.Point(357, 121);
             this.groupBoxInformationsBagage.Name = "groupBoxInformationsBagage";
-            this.groupBoxInformationsBagage.Size = new System.Drawing.Size(379, 229);
+            this.groupBoxInformationsBagage.Size = new System.Drawing.Size(379, 262);
             this.groupBoxInformationsBagage.TabIndex = 3;
             this.groupBoxInformationsBagage.TabStop = false;
             this.groupBoxInformationsBagage.Text = "Informations Bagage";
@@ -315,11 +317,21 @@
             this.textBoxClasseBagage.Size = new System.Drawing.Size(199, 26);
             this.textBoxClasseBagage.TabIndex = 2;
             // 
+            // btnCreer
+            // 
+            this.btnCreer.Location = new System.Drawing.Point(241, 218);
+            this.btnCreer.Name = "btnCreer";
+            this.btnCreer.Size = new System.Drawing.Size(107, 29);
+            this.btnCreer.TabIndex = 12;
+            this.btnCreer.Text = "Créer";
+            this.btnCreer.UseVisualStyleBackColor = true;
+            this.btnCreer.Click += new System.EventHandler(this.btnCreer_Click);
+            // 
             // PIM
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(736, 387);
+            this.ClientSize = new System.Drawing.Size(736, 420);
             this.Controls.Add(this.groupBoxInformationsBagage);
             this.Controls.Add(this.groupBoxInformationsVol);
             this.Controls.Add(this.groupBoxRecherche);
@@ -372,6 +384,7 @@
         private System.Windows.Forms.CheckBox checkBoxRush;
         private System.Windows.Forms.CheckBox checkBoxContinuation;
         private System.Windows.Forms.TextBox textBoxAlpha;
+        private System.Windows.Forms.Button btnCreer;
     }
 }
 

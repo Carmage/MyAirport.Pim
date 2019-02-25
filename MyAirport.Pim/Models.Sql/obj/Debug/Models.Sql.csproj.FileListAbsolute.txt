@@ -9,3 +9,14 @@ C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debu
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.csproj.CopyComplete
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.dll
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\bin\Debug\Models.Sql.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\bin\Debug\Models.Sql.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\bin\Debug\Models.AbstractDefinition.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\bin\Debug\MyAirport.Pim.Entities.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\bin\Debug\MyAirport.Pim.Entities.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\bin\Debug\Models.AbstractDefinition.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.csprojAssemblyReference.cache
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.csproj.CoreCompileInputs.cache
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.csproj.CopyComplete
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.Sql\obj\Debug\Models.Sql.pdb

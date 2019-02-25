@@ -9,3 +9,14 @@ C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debu
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.csproj.CopyComplete
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.dll
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debug\Models.Natif.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debug\Models.Natif.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debug\Models.AbstractDefinition.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debug\MyAirport.Pim.Entities.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debug\MyAirport.Pim.Entities.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\bin\Debug\Models.AbstractDefinition.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.csprojAssemblyReference.cache
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.csproj.CoreCompileInputs.cache
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.csproj.CopyComplete
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\ModelNatif\obj\Debug\Models.Natif.pdb

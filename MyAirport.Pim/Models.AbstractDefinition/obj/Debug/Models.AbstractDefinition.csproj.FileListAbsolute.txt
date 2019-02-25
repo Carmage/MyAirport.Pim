@@ -7,3 +7,12 @@ C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefi
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\obj\Debug\Models.AbstractDefinition.pdb
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\bin\Debug\MyAirport.Pim.Entities.dll
 C:\Users\Amaury\Documents\GitHub\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\bin\Debug\MyAirport.Pim.Entities.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\bin\Debug\Models.AbstractDefinition.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\bin\Debug\Models.AbstractDefinition.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\bin\Debug\MyAirport.Pim.Entities.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\bin\Debug\MyAirport.Pim.Entities.pdb
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\obj\Debug\Models.AbstractDefinition.csprojAssemblyReference.cache
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\obj\Debug\Models.AbstractDefinition.csproj.CoreCompileInputs.cache
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\obj\Debug\Models.AbstractDefinition.csproj.CopyComplete
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\obj\Debug\Models.AbstractDefinition.dll
+C:\Users\Sevan Melemedjian\Documents\epita\C#\MyAirport.Pim\MyAirport.Pim\Models.AbstractDefinition\obj\Debug\Models.AbstractDefinition.pdb

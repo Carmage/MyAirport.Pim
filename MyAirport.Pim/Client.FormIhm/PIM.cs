@@ -84,6 +84,15 @@ namespace Client.FormIhm
             {
                 toolStripStatusLabelMessages.Text = "";
                 OnPimStateChanged(PimState.CreationBagage);
+                SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, false);
+                SetTextBox(textBoxCompagnie, "", false);
+                SetTextBox(textBoxAlpha, "", false);
+                SetTextBox(textBoxLigne, "", false);
+                SetTextBox(textBoxDateVol, "", false);
+                SetTextBox(textBoxItineraire, "", false);
+                SetTextBox(textBoxClasseBagage, "", false);
+                checkBoxRush.Enabled = true;
+                checkBoxContinuation.Enabled = true;
             }
             else if (bagageList.Count == 1)
             {
@@ -131,6 +140,11 @@ namespace Client.FormIhm
         private void toolStripMenuReinitialiser_Click(object sender, EventArgs e)
         {
             ResetInterface();
+        }
+
+        private void btnCreer_Click(object sender, EventArgs e)
+        {
+            bool inserted = MyAirport.Pim.Models.Factory.Model.InsertBagage(codeIataBagage);
         }
     }
 }
