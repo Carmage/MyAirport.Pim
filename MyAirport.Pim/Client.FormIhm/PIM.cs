@@ -76,7 +76,7 @@ namespace Client.FormIhm
             {
                 toolStripStatusLabelMessages.Text = "";
                 OnPimStateChanged(PimState.CreationBagage);
-                SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, false);
+                SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true);
                 SetTextBox(textBoxCompagnie, "", false);
                 SetTextBox(textBoxAlpha, "", false);
                 SetTextBox(textBoxLigne, "", false);
