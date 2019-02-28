@@ -62,7 +62,8 @@ namespace MyAirport.Pim.Models
         {
             List<BagageDefinition> listBagRes = new List<BagageDefinition>();
 
-            // deals with 12 digits IATA, if 12 digits, just keep 6 of interest
+            // deals with 12 digits IATA
+            // if 12 digits, just keep the 6 of interest
             if (codeIataBagage.Length.Equals(12))
             { codeIataBagage = "%" + codeIataBagage.Substring(4,6) + "%"; }
 
