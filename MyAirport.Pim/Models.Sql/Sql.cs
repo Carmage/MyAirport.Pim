@@ -22,7 +22,7 @@ namespace MyAirport.Pim.Models
             + " from BAGAGE b"
             + " left outer join BAGAGE_A_POUR_PARTICULARITE bp on bp.ID_BAGAGE = b.ID_BAGAGE and bp.ID_PARTICULARITE = 15"
             + " left outer join COMPAGNIE c on COMPAGNIE = c.CODE_IATA"
-            + " where b.code_iata = @code_iata";
+            + " where SUBSTRING(b.code_iata, 5, 6) like @code_iata";
 
         public override BagageDefinition GetBagage(int idBagage)
         {
@@ -61,6 +61,10 @@ namespace MyAirport.Pim.Models
         public override List<BagageDefinition> GetBagage(string codeIataBagage)
         {
             List<BagageDefinition> listBagRes = new List<BagageDefinition>();
+
+            // deals with 12 digits IATA, if 12 digits, just keep 6 of interest
+            if (codeIataBagage.Length.Equals(12))
+            { codeIataBagage = "%" + codeIataBagage.Substring(4,6) + "%"; }
 
             using (SqlConnection cnx = new SqlConnection(strCnx))
             {
