@@ -186,7 +186,7 @@
             this.textBoxAlpha.Name = "textBoxAlpha";
             this.textBoxAlpha.ReadOnly = true;
             this.textBoxAlpha.Size = new System.Drawing.Size(110, 26);
-            this.textBoxAlpha.TabIndex = 10;
+            this.textBoxAlpha.TabIndex = 2;
             // 
             // labelCompagnie
             // 
@@ -204,7 +204,7 @@
             this.textBoxDateVol.Name = "textBoxDateVol";
             this.textBoxDateVol.ReadOnly = true;
             this.textBoxDateVol.Size = new System.Drawing.Size(227, 26);
-            this.textBoxDateVol.TabIndex = 3;
+            this.textBoxDateVol.TabIndex = 4;
             // 
             // labelDateVol
             // 
@@ -240,7 +240,7 @@
             this.textBoxLigne.Name = "textBoxLigne";
             this.textBoxLigne.ReadOnly = true;
             this.textBoxLigne.Size = new System.Drawing.Size(110, 26);
-            this.textBoxLigne.TabIndex = 2;
+            this.textBoxLigne.TabIndex = 3;
             // 
             // groupBoxInformationsBagage
             // 
@@ -265,7 +265,7 @@
             this.btnCreer.Location = new System.Drawing.Point(241, 218);
             this.btnCreer.Name = "btnCreer";
             this.btnCreer.Size = new System.Drawing.Size(107, 29);
-            this.btnCreer.TabIndex = 12;
+            this.btnCreer.TabIndex = 5;
             this.btnCreer.Text = "Créer";
             this.btnCreer.UseVisualStyleBackColor = true;
             this.btnCreer.Click += new System.EventHandler(this.btnCreer_Click);

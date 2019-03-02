@@ -41,6 +41,7 @@ namespace Client.FormIhm
 
         private void ResetInterface()
         {
+            btnRechercher.Enabled = true;
             SetTextBox(textBoxCodeIata, "", false);
             SetTextBox(textBoxCompagnie, "", true);
             SetTextBox(textBoxAlpha, "", true);
@@ -66,12 +67,41 @@ namespace Client.FormIhm
         {
             ResetInterface();
         }
+        
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string codeIataBagage = SanitizeCodeIata(textBoxCodeIata.Text);
+            if (!IsDigitsOnly(textBoxCodeIata.Text))
+            {
+                string codeIata = textBoxCodeIata.Text;
+                ResetInterface();
+                textBoxCodeIata.Text = codeIata;
+                Message("Le code IATA ne doit être composé que de chiffres.");
+                return;
+            }
 
-            SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true);
+            if (textBoxCodeIata.Text.Length < 6 || textBoxCodeIata.Text.Length > 12)
+            {
+                string codeIata = textBoxCodeIata.Text;
+                ResetInterface();
+                textBoxCodeIata.Text = codeIata;
+                Message("le code IATA comprend 6 à 12 chiffres.");
+                return;
+            }
+
+            string codeIataBagage = textBoxCodeIata.Text;
+
+            SetTextBox(textBoxCodeIata, codeIataBagage, true);
             List<BagageDefinition> bagageList;
 
             try
@@ -83,6 +113,7 @@ namespace Client.FormIhm
                     toolStripStatusLabelMessages.Text = "";
                     OnPimStateChanged(PimState.AffichageBagage);
                     BagageDefinition bagage = bagageList[0];
+                    btnRechercher.Enabled = false;
                     SetTextBox(textBoxCompagnie, bagage.NomCompagnie, true);
                     SetTextBox(textBoxAlpha, bagage.Compagnie, true);
                     SetTextBox(textBoxLigne, bagage.Ligne, true);
@@ -94,10 +125,11 @@ namespace Client.FormIhm
                     checkBoxContinuation.Enabled = false;
                     checkBoxContinuation.Checked = bagage.EnContinuation;
                 }
-                else // Create bagage mode
+                else if (textBoxCodeIata.Text.Length == 12) // Create bagage mode
                 {
                     toolStripStatusLabelMessages.Text = "";
                     OnPimStateChanged(PimState.CreationBagage);
+                    btnRechercher.Enabled = false;
                     SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true);
                     SetTextBox(textBoxCompagnie, "", false);
                     SetTextBox(textBoxAlpha, "", false);
@@ -109,10 +141,20 @@ namespace Client.FormIhm
                     checkBoxRush.Enabled = true;
                     checkBoxContinuation.Enabled = true;
                 }
+                else
+                {
+                    string codeIata = textBoxCodeIata.Text;
+                    ResetInterface();
+                    textBoxCodeIata.Text = codeIata;
+                    Message("Le code IATA doit comporter 12 chiffres lors de la création");
+                    MessageBox.Show("Le code IATA doit comporter 12 chiffres lors de la création", "Erreur de saisie", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             catch (ApplicationException ae) // Several bagages were found
             {
-                MessageBox.Show("Many returns : to be implemented");
+                MessageBox.Show("Plusieurs bagages ont été trouvés", "Fonctionnalité indisponible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textBoxCodeIata.Enabled = true;
             }
             catch // An other error occured
             {
@@ -120,26 +162,7 @@ namespace Client.FormIhm
             }
         }
 
-        private string SanitizeCodeIata(string codeIata)
-        {
-            if (codeIata.Length < 10 || codeIata.Length > 12)
-            {
-                Message("Le code IATA doit comporter 10 à 12 chiffres.");
-                return codeIata;
-            }
-
-            while (codeIata.Length != 12)
-            {
-                codeIata += '0';
-            }
-
-            return codeIata;
-        }
-
-        private void Message(string message)
-        {
-            toolStripStatusLabelMessages.Text = message;
-        }
+        private void Message(string message) => toolStripStatusLabelMessages.Text = message;
 
         private void toolStripMenuReinitialiser_Click(object sender, EventArgs e)
         {
@@ -163,10 +186,13 @@ namespace Client.FormIhm
                     out message
                 ))
             {
+                MessageBox.Show(message, "Création de bagage réussie", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ResetInterface();
             }
-
-            Message(message);
+            else
+            {
+                MessageBox.Show(message, "Echec de la création du bagage", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
