@@ -1,0 +1,1 @@
+Avant de commencer à utiliser l'application, il faut s'assurer que le chemin d'accès à SSMS sur le poste exécutant est correctement configuré. Pour ce faire il faut éditer le fichier ./MyAirport.Pim/MyAirport.Pim/Client.FormIhm/App.config et renseigner la bonne chaîne de connexion à SSMS.
