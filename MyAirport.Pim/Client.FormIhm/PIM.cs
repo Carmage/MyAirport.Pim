@@ -191,9 +191,10 @@ namespace Client.FormIhm
             }
             else
             {
+                string prevCodeIata = textBoxCodeIata.Text;
                 ResetInterface();
-                SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, false);
-                MessageBox.Show(message, "Echec de la création du bagage", MessageBoxButtons.OK, MessageBoxIcon.Error);s
+                SetTextBox(textBoxCodeIata, prevCodeIata, false);
+                MessageBox.Show(message, "Echec de la création du bagage", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

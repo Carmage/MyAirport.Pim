@@ -194,10 +194,15 @@ namespace MyAirport.Pim.Models
                 message += "La ligne ne doit avoir que des chiffres\n";
             }
 
-            if (!IsDigitsOnly(jourExploitation) || Convert.ToInt32(jourExploitation) > 365)
+            if (!IsDigitsOnly(jourExploitation))
             {
                 userError = true;
-                message += "La date du vol doit être un entier positif entre 1 et 365\n";
+                message += "La date du vol doit être un nombre\n";
+            }
+            else if (Convert.ToInt32(jourExploitation) > 365)
+            {
+                userError = true;
+                message += "La date du vol doit être entre 1 et 365\n";
             }
 
             Dictionary<string, int> compagnieClasses = new Dictionary<string, int>();
