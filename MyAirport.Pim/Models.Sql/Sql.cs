@@ -31,7 +31,12 @@ namespace MyAirport.Pim.Models
             + " where CODE_IATA = @compagnieAlpha;";
 
         string commandCreateBagage = "INSERT into BAGAGE (CODE_IATA, ORIGINE_CREATION, DATE_CREATION, CLASSE, PRIORITAIRE, ISUR, DESTINATION, ESCALE, EMB, RECOLE, COMPAGNIE, LIGNE, JOUR_EXPLOITATION, CONTINUATION, ORIGINE_SAFIR, EN_CONTINUATION, EN_TRANSFERT)"
+        + " output inserted.Id_BAGAGE"
         + " values(@codeIata, 'D', GETDATE(), @classe, @prioritaire, 0, @escale, @escale, 1, 0, @compagnie, @ligne, @jourExploitation, @continuation, 0, 0, 0);";
+
+        string commandCreateBagageParticularite = "INSERT into BAGAGE_A_POUR_PARTICULARITE (ID_BAGAGE, ID_PARTICULARITE)"
+            + " output inserted.ID_BAGAGE"
+            + " values(@insertedIdBagage, 15);";
 
         public override BagageDefinition GetBagage(int idBagage)
         {
@@ -146,16 +151,16 @@ namespace MyAirport.Pim.Models
             return res;
         }
 
-        public override string InsertBagage(string codeIata, bool continuation, string ligne, string nomCompagnie, string compagnie, string jourExploitation, string classeBagage, string escale, bool rush)
+        public override bool InsertBagage(string codeIata, bool continuation, string ligne, string nomCompagnie, string compagnie, string jourExploitation, string classeBagage, string escale, bool rush, out string message)
         {
-            string res = "";
+            message = "";
             bool userError = false;
 
             // Check that codeIata length is lower or equal than 12 chars and that it terminates by "00"
             if (codeIata.Length > 12)
             {
                 userError = true;
-                res = "CodeIata a plus de 12 caractères";
+                message = "CodeIata a plus de 12 caractères";
             }
             else
             {
@@ -171,14 +176,14 @@ namespace MyAirport.Pim.Models
             if (!compagnieClasses.ContainsKey(classeBagage))
             {
                 userError = true;
-                res = res.Equals("") ? res + "Classe '" + classeBagage + "' invalide" : ", classe " + classeBagage + " invalide";
+                message = message.Equals("") ? message + "Classe '" + classeBagage + "' invalide" : ", classe " + classeBagage + " invalide";
             }
 
             // Optionnally : Check that nomCompagnie is the full name of the compagnie with codeIata compagnie
             
             if (userError)
             {
-                return res;
+                return false;
             }
 
             SqlConnection cnx = new SqlConnection(strCnx);
@@ -194,16 +199,36 @@ namespace MyAirport.Pim.Models
             cmd.Parameters.AddWithValue("@jourExploitation", jourExploitation);
             cmd.Parameters.AddWithValue("@continuation", continuation ? "Y" : "N");
             // Execute the command
-            if (cmd.ExecuteNonQuery() != 0)
+            int insertedIdBagage = (int) cmd.ExecuteScalar();
+
+            if (insertedIdBagage != 0)
             {
-                // If some rows were inserted, then it is good and we commit
-                transaction.Commit();
-                return "Création OK";
+                // If some rows were inserted, then we can insert the bagageId in the BAGAGE_A_POUR_PARTICULARITE table so that the RUSH attribute will show up correctly later
+                if (rush)
+                {
+                    cmd = new SqlCommand(commandCreateBagageParticularite, cnx, transaction);
+                    cmd.Parameters.AddWithValue("@insertedIdBagage", insertedIdBagage);
+                    int insertedIdBagageParticularite = (int) cmd.ExecuteScalar();
+
+                    if (insertedIdBagageParticularite == insertedIdBagage)
+                    {
+                        transaction.Commit();
+                        message = "Bagage " + insertedIdBagageParticularite + " créé !";
+                        return true;
+                    }
+                }
+                else
+                {
+                    transaction.Commit();
+                    message = "Bagage " + insertedIdBagage + " créé !";
+                    return true;
+                }
             }
 
             // If nothing was inserted, there was an error somewhere and we rollback
             transaction.Rollback();
-            return "Erreur lors de l'insertion en base";
+            message = "Erreur lors de l'insertion en base";
+            return false;
         }
     }
 }

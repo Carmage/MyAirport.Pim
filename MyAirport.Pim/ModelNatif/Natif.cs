@@ -16,7 +16,7 @@ namespace MyAirport.Pim.Models
             throw new NotImplementedException();
         }
 
-        public override string InsertBagage(string codeIata, bool enContinuation, string ligne, string nomCompagnie, string compagnie, string dateVol, string classeBagage, string itineraire, bool rush)
+        public override bool InsertBagage(string codeIata, bool enContinuation, string ligne, string nomCompagnie, string compagnie, string dateVol, string classeBagage, string itineraire, bool rush, out string message)
         {
             throw new NotImplementedException();
         }

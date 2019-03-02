@@ -8,6 +8,7 @@ namespace MyAirport.Pim.Models
         public abstract BagageDefinition GetBagage(int idBagage);
 
         public abstract List<BagageDefinition> GetBagage(string codeIataBagage);
-        public abstract string InsertBagage(string codeIata, bool enContinuation, string ligne, string nomCompagnie, string compagnie, string dateVol, string classeBagage, string itineraire, bool rush);
+
+        public abstract bool InsertBagage(string codeIata, bool enContinuation, string ligne, string nomCompagnie, string compagnie, string dateVol, string classeBagage, string itineraire, bool rush, out string message);
     }
 }

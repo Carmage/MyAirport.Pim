@@ -52,6 +52,7 @@ namespace Client.FormIhm
             checkBoxContinuation.Enabled = false;
             checkBoxRush.Enabled = false;
             toolStripStatusLabelMessages.Text = "";
+            btnCreer.Enabled = false;
             OnPimStateChanged(PimState.AttenteBagage);
         }
 
@@ -111,7 +112,7 @@ namespace Client.FormIhm
             }
             catch (ApplicationException ae) // Several bagages were found
             {
-                MessageBox.Show("To be implemented");
+                MessageBox.Show("Many returns : to be implemented");
             }
             catch // An other error occured
             {
@@ -147,7 +148,9 @@ namespace Client.FormIhm
 
         private void btnCreer_Click(object sender, EventArgs e)
         {
-            string message = MyAirport.Pim.Models.Factory.Model.InsertBagage(
+            string message;
+
+            if (MyAirport.Pim.Models.Factory.Model.InsertBagage(
                     textBoxCodeIata.Text,
                     checkBoxContinuation.Checked,
                     textBoxLigne.Text,
@@ -156,10 +159,9 @@ namespace Client.FormIhm
                     textBoxDateVol.Text,
                     textBoxClasseBagage.Text,
                     textBoxItineraire.Text,
-                    checkBoxRush.Checked
-                );
-
-            if (message.Equals("Création OK"))
+                    checkBoxRush.Checked,
+                    out message
+                ))
             {
                 ResetInterface();
             }
