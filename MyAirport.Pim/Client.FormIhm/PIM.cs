@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using ClientPim;
+using System.Collections.Generic;
+using MyAirport.Pim.Entities;
 
 namespace Client.FormIhm
 {
@@ -46,6 +48,7 @@ namespace Client.FormIhm
             SetTextBox(textBoxDateVol, "", true);
             SetTextBox(textBoxItineraire, "", true);
             SetTextBox(textBoxClasseBagage, "", true);
+            btnCreer.Enabled = false;
             checkBoxContinuation.Enabled = false;
             checkBoxRush.Enabled = false;
             toolStripStatusLabelMessages.Text = "";
@@ -68,43 +71,51 @@ namespace Client.FormIhm
             string codeIataBagage = SanitizeCodeIata(textBoxCodeIata.Text);
 
             SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true);
-            System.Collections.Generic.List<MyAirport.Pim.Entities.BagageDefinition> bagageList = MyAirport.Pim.Models.Factory.Model.GetBagage(codeIataBagage);
+            List<BagageDefinition> bagageList;
 
-            // TODO Créer l'exception pour gérer le cas où on a 0 bagages retournés
-
-            if (bagageList.Count == 0) // Enter create mode
+            try
             {
-                toolStripStatusLabelMessages.Text = "";
-                OnPimStateChanged(PimState.CreationBagage);
-                SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true);
-                SetTextBox(textBoxCompagnie, "", false);
-                SetTextBox(textBoxAlpha, "", false);
-                SetTextBox(textBoxLigne, "", false);
-                SetTextBox(textBoxDateVol, "", false);
-                SetTextBox(textBoxItineraire, "", false);
-                SetTextBox(textBoxClasseBagage, "", false);
-                checkBoxRush.Enabled = true;
-                checkBoxContinuation.Enabled = true;
+                bagageList = MyAirport.Pim.Models.Factory.Model.GetBagage(codeIataBagage);
+               
+                if (!(bagageList is null)) // If the bagageList is not null it means we have exactly one bagage
+                {
+                    toolStripStatusLabelMessages.Text = "";
+                    OnPimStateChanged(PimState.AffichageBagage);
+                    BagageDefinition bagage = bagageList[0];
+                    SetTextBox(textBoxCompagnie, bagage.NomCompagnie, true);
+                    SetTextBox(textBoxAlpha, bagage.Compagnie, true);
+                    SetTextBox(textBoxLigne, bagage.Ligne, true);
+                    SetTextBox(textBoxDateVol, Convert.ToString(bagage.DateVol), true);
+                    SetTextBox(textBoxItineraire, bagage.Itineraire, true);
+                    SetTextBox(textBoxClasseBagage, bagage.ClasseBagage, true);
+                    checkBoxRush.Enabled = false;
+                    checkBoxRush.Checked = bagage.Rush;
+                    checkBoxContinuation.Enabled = false;
+                    checkBoxContinuation.Checked = bagage.EnContinuation;
+                }
+                else // Create bagage mode
+                {
+                    toolStripStatusLabelMessages.Text = "";
+                    OnPimStateChanged(PimState.CreationBagage);
+                    SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, true);
+                    SetTextBox(textBoxCompagnie, "", false);
+                    SetTextBox(textBoxAlpha, "", false);
+                    SetTextBox(textBoxLigne, "", false);
+                    SetTextBox(textBoxDateVol, "", false);
+                    SetTextBox(textBoxItineraire, "", false);
+                    SetTextBox(textBoxClasseBagage, "", false);
+                    btnCreer.Enabled = true;
+                    checkBoxRush.Enabled = true;
+                    checkBoxContinuation.Enabled = true;
+                }
             }
-            else if (bagageList.Count == 1)
+            catch (ApplicationException ae) // Several bagages were found
             {
-                toolStripStatusLabelMessages.Text = "";
-                OnPimStateChanged(PimState.AffichageBagage);
-                MyAirport.Pim.Entities.BagageDefinition bagage = bagageList[0];
-                SetTextBox(textBoxCompagnie, bagage.NomCompagnie, true);
-                SetTextBox(textBoxAlpha, bagage.Compagnie, true);
-                SetTextBox(textBoxLigne, bagage.Ligne, true);
-                SetTextBox(textBoxDateVol, Convert.ToString(bagage.DateVol), true);
-                SetTextBox(textBoxItineraire, bagage.Itineraire, true);
-                SetTextBox(textBoxClasseBagage, bagage.ClasseBagage, true);
-                checkBoxRush.Enabled = false;
-                checkBoxRush.Checked = bagage.Rush;
-                checkBoxContinuation.Enabled = false;
-                checkBoxContinuation.Checked = bagage.EnContinuation;
+                MessageBox.Show("To be implemented");
             }
-            else // Display a popup with all the bagage found
+            catch // An other error occured
             {
-
+                MessageBox.Show("Une erreur s’est produite dans le traitement de votre demande.\nMerci de bien vouloir re-tester ultérieurement ou de contacter votre administrateur.", "Erreur dans le traitement de votre demande", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -136,7 +147,24 @@ namespace Client.FormIhm
 
         private void btnCreer_Click(object sender, EventArgs e)
         {
-            // bool inserted = MyAirport.Pim.Models.Factory.Model.InsertBagage();
+            string message = MyAirport.Pim.Models.Factory.Model.InsertBagage(
+                    textBoxCodeIata.Text,
+                    checkBoxContinuation.Checked,
+                    textBoxLigne.Text,
+                    textBoxCompagnie.Text,
+                    textBoxAlpha.Text,
+                    textBoxDateVol.Text,
+                    textBoxClasseBagage.Text,
+                    textBoxItineraire.Text,
+                    checkBoxRush.Checked
+                );
+
+            if (message.Equals("Création OK"))
+            {
+                ResetInterface();
+            }
+
+            Message(message);
         }
     }
 }

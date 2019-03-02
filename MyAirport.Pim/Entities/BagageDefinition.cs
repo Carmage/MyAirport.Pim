@@ -4,7 +4,7 @@ namespace MyAirport.Pim.Entities
 {
     sealed public class BagageDefinition
     {
-        public int IdBagage { get; set; }           // Identifiant bagage en base de données permet l'identification unique d'un bagage
+        // public string IdBagage { get; set; }        // Identifiant bagage en base de données permet l'identification unique d'un bagage
 
         public string CodeIata { get; set; }        // Numéro du bagage présent sur l'étiquette
 
@@ -29,7 +29,7 @@ namespace MyAirport.Pim.Entities
         public override string ToString()
         {
             return "Object=Bagage" +
-                    ", ID=" + IdBagage +
+                    // ", ID=" + IdBagage +
                     ", IATA=" + CodeIata +
                     ", ClassBagage=" + ClasseBagage +
                     ", Prioritaire=" + Prioritaire +

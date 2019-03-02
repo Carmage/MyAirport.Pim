@@ -261,6 +261,7 @@
             // 
             // btnCreer
             // 
+            this.btnCreer.Enabled = false;
             this.btnCreer.Location = new System.Drawing.Point(241, 218);
             this.btnCreer.Name = "btnCreer";
             this.btnCreer.Size = new System.Drawing.Size(107, 29);
