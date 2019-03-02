@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using ClientPim;
-using System.Collections.Generic;
 using MyAirport.Pim.Entities;
 
 namespace Client.FormIhm
@@ -50,6 +49,8 @@ namespace Client.FormIhm
             SetTextBox(textBoxItineraire, "", true);
             SetTextBox(textBoxClasseBagage, "", true);
             btnCreer.Enabled = false;
+            checkBoxContinuation.Checked = false;
+            checkBoxRush.Checked = false;
             checkBoxContinuation.Enabled = false;
             checkBoxRush.Enabled = false;
             toolStripStatusLabelMessages.Text = "";
@@ -68,7 +69,7 @@ namespace Client.FormIhm
             ResetInterface();
         }
         
-        bool IsDigitsOnly(string str)
+        public bool IsDigitsOnly(string str)
         {
             foreach (char c in str)
             {
@@ -78,7 +79,7 @@ namespace Client.FormIhm
 
             return true;
         }
-
+        
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (!IsDigitsOnly(textBoxCodeIata.Text))
@@ -95,24 +96,22 @@ namespace Client.FormIhm
                 string codeIata = textBoxCodeIata.Text;
                 ResetInterface();
                 textBoxCodeIata.Text = codeIata;
-                Message("le code IATA comprend 6 à 12 chiffres.");
+                Message("Le code IATA comprend 6 à 12 chiffres.");
                 return;
             }
 
             string codeIataBagage = textBoxCodeIata.Text;
-
-            SetTextBox(textBoxCodeIata, codeIataBagage, true);
-            List<BagageDefinition> bagageList;
+            BagageDefinition bagage;
 
             try
             {
-                bagageList = MyAirport.Pim.Models.Factory.Model.GetBagage(codeIataBagage);
-               
-                if (!(bagageList is null)) // If the bagageList is not null it means we have exactly one bagage
+                bagage = MyAirport.Pim.Models.Factory.Model.GetBagage(codeIataBagage);
+
+                if (!(bagage is null)) // If the bagageList is not null it means we have exactly one bagage
                 {
+                    SetTextBox(textBoxCodeIata, codeIataBagage, true);
                     toolStripStatusLabelMessages.Text = "";
                     OnPimStateChanged(PimState.AffichageBagage);
-                    BagageDefinition bagage = bagageList[0];
                     btnRechercher.Enabled = false;
                     SetTextBox(textBoxCompagnie, bagage.NomCompagnie, true);
                     SetTextBox(textBoxAlpha, bagage.Compagnie, true);
@@ -125,8 +124,16 @@ namespace Client.FormIhm
                     checkBoxContinuation.Enabled = false;
                     checkBoxContinuation.Checked = bagage.EnContinuation;
                 }
-                else if (textBoxCodeIata.Text.Length == 12) // Create bagage mode
+                else // Create bagage mode
                 {
+                    if (textBoxCodeIata.Text.Length != 12)
+                    {
+                        ResetInterface();
+                        SetTextBox(textBoxCodeIata, codeIataBagage, false);
+                        MessageBox.Show("Le code IATA doit avoir 12 caractères en mode création", "Erreur de saisie", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     toolStripStatusLabelMessages.Text = "";
                     OnPimStateChanged(PimState.CreationBagage);
                     btnRechercher.Enabled = false;
@@ -138,20 +145,13 @@ namespace Client.FormIhm
                     SetTextBox(textBoxItineraire, "", false);
                     SetTextBox(textBoxClasseBagage, "", false);
                     btnCreer.Enabled = true;
+                    checkBoxRush.Checked = false;
+                    checkBoxContinuation.Checked = false;
                     checkBoxRush.Enabled = true;
                     checkBoxContinuation.Enabled = true;
                 }
-                else
-                {
-                    string codeIata = textBoxCodeIata.Text;
-                    ResetInterface();
-                    textBoxCodeIata.Text = codeIata;
-                    Message("Le code IATA doit comporter 12 chiffres lors de la création");
-                    MessageBox.Show("Le code IATA doit comporter 12 chiffres lors de la création", "Erreur de saisie", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
             }
-            catch (ApplicationException ae) // Several bagages were found
+            catch (ApplicationException) // Several bagages were found
             {
                 MessageBox.Show("Plusieurs bagages ont été trouvés", "Fonctionnalité indisponible", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 textBoxCodeIata.Enabled = true;
@@ -191,7 +191,9 @@ namespace Client.FormIhm
             }
             else
             {
-                MessageBox.Show(message, "Echec de la création du bagage", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ResetInterface();
+                SetTextBox(textBoxCodeIata, textBoxCodeIata.Text, false);
+                MessageBox.Show(message, "Echec de la création du bagage", MessageBoxButtons.OK, MessageBoxIcon.Error);s
             }
         }
     }

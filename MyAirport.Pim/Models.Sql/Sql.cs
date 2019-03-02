@@ -24,7 +24,6 @@ namespace MyAirport.Pim.Models
             + " left outer join BAGAGE_A_POUR_PARTICULARITE bp on bp.ID_BAGAGE = b.ID_BAGAGE and bp.ID_PARTICULARITE = 15"
             + " left outer join COMPAGNIE c on COMPAGNIE = c.CODE_IATA"
             + " where SUBSTRING(b.code_iata, 5, 6) like @code_iata"; // This line makes the request accept 6 characters of codeIata
-            // + " where b.code_iata = @code_iata"; // This line makes it only accept full codeIata
 
         string commandGetCompagnieClasse = "SELECT CLASSE, PRIORITAIRE"
             + " from COMPAGNIE c left outer join COMPAGNIE_CLASSE cc on c.ID_COMPAGNIE = cc.ID_COMPAGNIE"
@@ -71,16 +70,12 @@ namespace MyAirport.Pim.Models
             return bagRes;
         }
 
-        public override List<BagageDefinition> GetBagage(string codeIataBagage)
+        public override BagageDefinition GetBagage(string codeIataBagage)
         {
-            List<BagageDefinition> listBagRes = new List<BagageDefinition>();
-
-            // Deals with 12 digits IATA
-            // If 12 digits, just keep the 6 of interest
-            
             if (codeIataBagage.Length.Equals(12))
-            { codeIataBagage = "%" + codeIataBagage.Substring(4,6) + "%"; }
-            
+            {
+                codeIataBagage = "%" + codeIataBagage.Substring(4, 6) + "%";
+            }
 
             using (SqlConnection cnx = new SqlConnection(strCnx))
             {
@@ -88,10 +83,11 @@ namespace MyAirport.Pim.Models
                 cmd.Parameters.AddWithValue("@code_iata", codeIataBagage);
                 cnx.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
+                BagageDefinition res = null;
 
-                while (sdr.Read())
+                if (sdr.Read())
                 {
-                    listBagRes.Add(new BagageDefinition()
+                    res = new BagageDefinition()
                     {
                         // IdBagage = sdr.GetString(sdr.GetOrdinal("ID_BAGAGE")),
                         CodeIata = sdr.GetString(sdr.GetOrdinal("CODE_IATA")),
@@ -104,23 +100,19 @@ namespace MyAirport.Pim.Models
                         Prioritaire = sdr.GetBoolean(sdr.GetOrdinal("PRIORITAIRE")),
                         Itineraire = sdr.GetString(sdr.GetOrdinal("ESCALE")),
                         Rush = sdr.GetBoolean(sdr.GetOrdinal("RUSH"))
-                    });
-                }
+                    };
 
-                Console.WriteLine("GetBagage returned :");
+                    // If some more bagages were found, raise an exception
+                    if (sdr.Read())
+                    {
+                        throw new ApplicationException();
+                    }
 
-                foreach (BagageDefinition b in listBagRes)
-                {
-                    Console.WriteLine("\t" + b.ToString());
+                    return res;
                 }
             }
 
-            if (listBagRes.Count > 1)
-            {
-                throw new ApplicationException();
-            }
-
-            return listBagRes.Count == 0 ? null : listBagRes;
+            return null;
         }
 
         private Dictionary<string, int> GetCompagnieClasses(string compagnieAlpha)
@@ -134,53 +126,110 @@ namespace MyAirport.Pim.Models
                 cnx.Open();
                 SqlDataReader sdr = cmd.ExecuteReader();
 
-
-                // Call Read before accessing data.
                 while (sdr.Read())
                 {
-                    var record = (IDataRecord) sdr;
+                    var record = (IDataRecord)sdr;
                     string classe = Convert.ToString(record[0]);
                     int prioritaire = Convert.ToInt32(record[1]);
                     res.Add(classe, prioritaire);
                 }
 
-                // Call Close when done reading.
                 sdr.Close();
             }
 
             return res;
         }
 
-        public override bool InsertBagage(string codeIata, bool continuation, string ligne, string nomCompagnie, string compagnie, string jourExploitation, string classeBagage, string escale, bool rush, out string message)
+        private bool IsDigitsOnly(string str)
         {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
+        private bool IsLetterOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if ((c < 'A' || c > 'Z') && (c < 'a' || c > 'z'))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public override bool InsertBagage(string codeIata, bool continuation, string ligne, string nomCompagnie, string compagnie, string jourExploitation, string classeBagage, string itineraire, bool rush, out string message)
+        {
+            compagnie = compagnie.ToUpper();
+            classeBagage = classeBagage.ToUpper();
+            itineraire = itineraire.ToUpper();
+
             message = "";
             bool userError = false;
 
-            // Check that codeIata length is lower or equal than 12 chars and that it terminates by "00"
+            if (!IsDigitsOnly(codeIata))
+            {
+                userError = true;
+                message += "Le code IATA ne doit être composé que de chiffres.\n";
+            }
+
             if (codeIata.Length > 12)
             {
                 userError = true;
-                message = "CodeIata a plus de 12 caractères";
+                message += "Le Code IATA doit avoir au plus 12 chiffres\n";
+            }
+
+            if (itineraire.Length != 3)
+            {
+                userError = true;
+                message += "L'itinéraire doit avoir exactement 3 lettres\n";
+            }
+
+            if (!IsDigitsOnly(ligne))
+            {
+                userError = true;
+                message += "La ligne ne doit avoir que des chiffres\n";
+            }
+
+            if (!IsDigitsOnly(jourExploitation) || Convert.ToInt32(jourExploitation) > 365)
+            {
+                userError = true;
+                message += "La date du vol doit être un entier positif entre 1 et 365\n";
+            }
+
+            Dictionary<string, int> compagnieClasses = new Dictionary<string, int>();
+
+            if (compagnie.Length != 2)
+            {
+                userError = true;
+                message += "La compagnie doit avoir exactement 2 lettres\n";
+            }
+            else if (classeBagage.Length != 1)
+            {
+                userError = true;
+                message += "La classe doit avoir exactement 1 lettre\n";
             }
             else
             {
-                while (codeIata.Length < 12)
+                compagnieClasses = GetCompagnieClasses(compagnie);
+
+                // Check that the company exists
+                if (compagnieClasses.Count == 0)
                 {
-                    codeIata += '0';
+                    userError = true;
+                    message += "La compagnie '" + compagnie + "' n'existe pas\n";
+                }
+                // Check that classeBagage is valid in regard to compagnie (if this flag is valid for this company)
+                else if (!compagnieClasses.ContainsKey(classeBagage))
+                {
+                    userError = true;
+                    message += "La classe '" + classeBagage + "' n'existe pas pour '" + compagnie + "'\n";
                 }
             }
 
-            // Check that classeBagage is valid in regard to compagnie (if this flag is valid for this company)
-            Dictionary<string, int> compagnieClasses = GetCompagnieClasses(compagnie);
-
-            if (!compagnieClasses.ContainsKey(classeBagage))
-            {
-                userError = true;
-                message = message.Equals("") ? message + "Classe '" + classeBagage + "' invalide" : ", classe " + classeBagage + " invalide";
-            }
-
-            // Optionnally : Check that nomCompagnie is the full name of the compagnie with codeIata compagnie
-            
             if (userError)
             {
                 return false;
@@ -193,42 +242,55 @@ namespace MyAirport.Pim.Models
             cmd.Parameters.AddWithValue("@codeIata", codeIata);
             cmd.Parameters.AddWithValue("@classe", classeBagage);
             cmd.Parameters.AddWithValue("@prioritaire", compagnieClasses[classeBagage]);
-            cmd.Parameters.AddWithValue("@escale", escale);
+            cmd.Parameters.AddWithValue("@escale", itineraire);
             cmd.Parameters.AddWithValue("@compagnie", compagnie);
             cmd.Parameters.AddWithValue("@ligne", ligne);
             cmd.Parameters.AddWithValue("@jourExploitation", jourExploitation);
-            cmd.Parameters.AddWithValue("@continuation", continuation ? "Y" : "N");
+            // The follwing line only makes sense if the user is able to enter both the "destination" and the "escale" fields
+            // cmd.Parameters.AddWithValue("@continuation", continuation ? "Y" : "N");
+            cmd.Parameters.AddWithValue("@continuation", "Y");
+
             // Execute the command
-            int insertedIdBagage = (int) cmd.ExecuteScalar();
-
-            if (insertedIdBagage != 0)
+            try
             {
-                // If some rows were inserted, then we can insert the bagageId in the BAGAGE_A_POUR_PARTICULARITE table so that the RUSH attribute will show up correctly later
-                if (rush)
-                {
-                    cmd = new SqlCommand(commandCreateBagageParticularite, cnx, transaction);
-                    cmd.Parameters.AddWithValue("@insertedIdBagage", insertedIdBagage);
-                    int insertedIdBagageParticularite = (int) cmd.ExecuteScalar();
+                int insertedIdBagage = (int)cmd.ExecuteScalar();
 
-                    if (insertedIdBagageParticularite == insertedIdBagage)
+                if (insertedIdBagage != 0)
+                {
+                    // If some rows were inserted, then we can insert the bagageId in the BAGAGE_A_POUR_PARTICULARITE table so that the RUSH attribute will show up correctly later
+                    if (rush)
+                    {
+                        cmd = new SqlCommand(commandCreateBagageParticularite, cnx, transaction);
+                        cmd.Parameters.AddWithValue("@insertedIdBagage", insertedIdBagage);
+                        int insertedIdBagageParticularite = (int)cmd.ExecuteScalar();
+
+                        if (insertedIdBagageParticularite == insertedIdBagage)
+                        {
+                            transaction.Commit();
+                            message = "Bagage " + insertedIdBagageParticularite + " créé !";
+                            return true;
+                        }
+                    }
+                    else
                     {
                         transaction.Commit();
-                        message = "Bagage " + insertedIdBagageParticularite + " créé !";
+                        message = "Bagage " + insertedIdBagage + " créé !";
                         return true;
                     }
                 }
-                else
-                {
-                    transaction.Commit();
-                    message = "Bagage " + insertedIdBagage + " créé !";
-                    return true;
-                }
-            }
 
-            // If nothing was inserted, there was an error somewhere and we rollback
-            transaction.Rollback();
-            message = "Erreur lors de l'insertion en base";
-            return false;
+                // If nothing was inserted, there was an error somewhere and we rollback
+                transaction.Rollback();
+                message = "Erreur lors de l'insertion en base";
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // If nothing was inserted, there was an error somewhere and we rollback
+                transaction.Rollback();
+                message = ex.Message;
+                return false;
+            }
         }
     }
 }

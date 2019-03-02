@@ -16,15 +16,15 @@ namespace MyAirport.Pim.Entities
 
         public DateTime DateVol { get; set; }       // Jour et heure de depart du vol
 
-        public string Itineraire { get; set; }      // Arrêt où descend le passager pour ce vol
+        public string Itineraire { get; set; }      // Escale ou destination pour ce vol
 
         public string ClasseBagage { get; set; }    // Classe du bagage en fonction de la compagnie
 
         public bool Prioritaire { get; set; }       // Est-ce que le passager est un passager prioritaire?
 
-        public bool EnContinuation { get; set; }    // Si la destination est différente de l'itineraire, est-ce que le bagage doit être livré au passager au prochain arrêt?
+        public bool EnContinuation { get; set; }    // Si la destination est différente de l'escale
 
-        public bool Rush { get; set; }              // Bagage sans passager (pour les bagages ayant ratés un vol)
+        public bool Rush { get; set; }              // Bagage sans passager (pour les passagers ayant ratés un vol)
 
         public override string ToString()
         {
